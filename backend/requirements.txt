@@ -1,26 +1,21 @@
-# Core Requirements
-fastapi==0.95.2
-uvicorn==0.22.0
-streamlit==1.24.0
-PyPDF2==3.0.1
-requests==2.31.0
-python-multipart==0.0.6
+fastapi
+uvicorn
+streamlit
+PyPDF2
+requests
+python-multipart
 
-# PDF Processing & Preview
-pymupdf==1.22.5
-pillow==10.0.0
+pymupdf
+pillow
 
-# Data Handling & UI
-pandas==2.0.3
-numpy==1.24.3
+pandas
+numpy
 
-# Additional Utilities
-python-dotenv==1.0.0
-python-dateutil==2.8.2
-zipfile36==0.1.3
+python-dotenv
+python-dateutil
+zipfile36
 
-# Development Tools
-pytest==7.4.0
-pytest-cov==4.1.0
-black==23.7.0
-flake8==6.0.0
+pytest
+pytest-cov
+black
+flake8
