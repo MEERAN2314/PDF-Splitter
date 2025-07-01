@@ -11,7 +11,7 @@ import tempfile
 import zipfile
 
 # Configuration
-BACKEND_URL = "http://localhost:8000"
+BACKEND_URL = "https://pdf-splitter-backend1.onrender.com"
 st.set_page_config(page_title="PDF Agent Splitter", page_icon="✂️", layout="wide")
 
 # Custom CSS
