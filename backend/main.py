@@ -1,4 +1,3 @@
-# backend/main.py (updated)
 from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -15,7 +14,7 @@ from fastapi.responses import FileResponse
 app = FastAPI(
     title="PDF Agent Splitter API",
     description="API for splitting PDF documents and extracting specific pages",
-    version="1.1.0"  # Updated version
+    version="1.1.1"  # Updated version
 )
 
 # CORS configuration
@@ -32,26 +31,26 @@ class PDFSplitRequest(BaseModel):
     output_format: str = "pdf"  # pdf or separate_pages
 
 class PDFMetadata(BaseModel):
-    title: str = None
-    author: str = None
-    creator: str = None
-    producer: str = None
-    creation_date: str = None
-    modification_date: str = None
+    title: Optional[str] = ""
+    author: Optional[str] = ""
+    creator: Optional[str] = ""
+    producer: Optional[str] = ""
+    creation_date: Optional[str] = ""
+    modification_date: Optional[str] = ""
     total_pages: int
 
 class PDFSplitResponse(BaseModel):
     status: str
-    message: str = None
-    download_url: str = None
-    metadata: PDFMetadata = None
-    extracted_text: str = None
-    file_size: str = None
+    message: Optional[str] = None
+    download_url: Optional[str] = None
+    metadata: Optional[PDFMetadata] = None
+    extracted_text: Optional[str] = None
+    file_size: Optional[str] = None
 
 class BatchProcessResponse(BaseModel):
     status: str
-    message: str = None
-    download_url: str = None
+    message: Optional[str] = None
+    download_url: Optional[str] = None
     processed_files: int = 0
     total_files: int = 0
     errors: List[str] = []
@@ -60,14 +59,14 @@ UPLOAD_DIR = "uploads"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 def get_pdf_metadata(pdf_reader):
-    metadata = pdf_reader.metadata
+    metadata = getattr(pdf_reader, 'metadata', None) or {}
     return PDFMetadata(
-        title=metadata.title if metadata else None,
-        author=metadata.author if metadata else None,
-        creator=metadata.creator if metadata else None,
-        producer=metadata.producer if metadata else None,
-        creation_date=str(metadata.creation_date) if metadata and metadata.creation_date else None,
-        modification_date=str(metadata.modification_date) if metadata and metadata.modification_date else None,
+        title=str(metadata.get('title', '')) if metadata.get('title') else "",
+        author=str(metadata.get('author', '')) if metadata.get('author') else "",
+        creator=str(metadata.get('creator', '')) if metadata.get('creator') else "",
+        producer=str(metadata.get('producer', '')) if metadata.get('producer') else "",
+        creation_date=str(metadata.get('/CreationDate', '')) if metadata.get('/CreationDate') else "",
+        modification_date=str(metadata.get('/ModDate', '')) if metadata.get('/ModDate') else "",
         total_pages=len(pdf_reader.pages)
     )
 
